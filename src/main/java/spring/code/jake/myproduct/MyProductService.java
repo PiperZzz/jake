@@ -3,7 +3,7 @@ package spring.code.jake.myproduct;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.*;
 import org.slf4j.*;
@@ -22,7 +22,7 @@ public class MyProductService {
     }
 
     @Transactional
-    public MyProductDTO updateProductById(@NotBlank Long productId, MyProductDTO productDTO) {
+    public MyProductDTO updateProductById(@NotBlank Long productId, @NotNull MyProductDTO productDTO) {
         MyProductEntity product = myProductsRepository.findById(productId)
                 .orElseThrow(() -> new MyProductException("The Product to update does not exist"));
         product.setProductName(productDTO.productName());
