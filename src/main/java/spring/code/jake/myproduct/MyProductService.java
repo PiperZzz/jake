@@ -31,12 +31,11 @@ public class MyProductService {
         return myProductDTOMapper.apply(product);
     }
 
-    // public List<MyProductDTO> getProductsByName(int page, int size) {
-    //     Pageable pageable = PageRequest.of(page, size);
-    //     return myProductsRepository.findProductsByName(pageable)
-    //             .stream()
-    //             .map(myProductDTOMapper)
-    //             .collect(Collectors.toList());
-    // }
+    public List<MyProductDTO> getProductsByName(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return myProductsRepository.findByProductNameContaining(keyword, pageable)
+                .stream()
+                .map(myProductDTOMapper)
+                .collect(Collectors.toList());
+    }
 }
-    // TODO: MyProductDtoMapper

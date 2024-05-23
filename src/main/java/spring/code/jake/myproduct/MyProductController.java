@@ -31,21 +31,22 @@ public class MyProductController {
         return ResponseEntity.ok(userName + orderId + "OK");
     }
 
-    // @GetMapping("/products")
-    // public ResponseEntity<List<MyProductDTO>> getProducts(
-    //         @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
-    //         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-    //     // Query Parameter 另一个常见用途是分页 Pagination
-    //     List<MyProductDTO> products = myProductService.getProductsByName(pageNumber, pageSize);
+    @GetMapping("/products")
+    public ResponseEntity<List<MyProductDTO>> getProducts(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        // Query Parameter 另一个常见用途是分页 Pagination
+        List<MyProductDTO> products = myProductService.getProductsByName(keyword, pageNumber, pageSize);
 
-    //     if (products == null) {
-    //         throw new RuntimeException(""); // 交给RestControllerAdvice异常处理器去处理是最佳实践
-    //     } else if (products.isEmpty()) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"); // 实际开发中不推荐，这里只做演示
-    //     }
+        if (products == null) {
+            throw new RuntimeException(""); // 交给RestControllerAdvice异常处理器去处理是最佳实践
+        } else if (products.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"); // 实际开发中不推荐，这里只做演示
+        }
 
-    //     return ResponseEntity.ok(products);
-    // }
+        return ResponseEntity.ok(products);
+    }
 
     @DeleteMapping("/{userName}/order/{orderId}")
     public ResponseEntity<String> deleteUserOrder(@PathVariable("userName") String userName,
