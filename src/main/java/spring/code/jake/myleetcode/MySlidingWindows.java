@@ -1,6 +1,6 @@
 package spring.code.jake.myleetcode;
 
-public class MySlidingWindow {
+public class MySlidingWindows {
     
     public static int maxSubArray(int[] nums) {
 
