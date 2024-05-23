@@ -2,7 +2,7 @@ package spring.code.jake.myleetcode;
 
 public class MyTwoPointers {
 
-    public static void moveZeroesToEnd(int[] nums) {
+    public static int[] moveZeroesToEnd(int[] nums) {
         int nonZeroIndex = 0; // 标记最后一个non-zero元素位置
 
         for (int i = 0; i < nums.length; i++) { // 本质就是non-zero指针和遍历指针同向移动
@@ -14,6 +14,8 @@ public class MyTwoPointers {
         for (int i = nonZeroIndex; i < nums.length; i++) {
             nums[i] = 0; // fill the rest of the array with zeros
         }
+
+        return nums;
     }
 
     public static int[] mergeSortedArrays(int[] array1, int[] array2) {
