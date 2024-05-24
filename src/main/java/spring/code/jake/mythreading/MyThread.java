@@ -65,18 +65,46 @@ public class MyThread extends Thread {
         localThreadPool.shutdown();
     }
 
+    @SuppressWarnings("unused")
     public static void completableFutureMethods() {
-        @SuppressWarnings("unused")
-        CompletableFuture<String> thenApply = CompletableFuture.supplyAsync(() -> callExternalService()).thenApply(result -> callAnotherExternalService(result + "new input"));
+        ExecutorService localThreadPool = Executors.newFixedThreadPool(3);
+        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> callExternalService());
+        CompletableFuture<String> completableFutureAnother = CompletableFuture.supplyAsync(() -> callAnotherExternalService("new input"));
 
-        CompletableFuture.supplyAsync(() -> callExternalService()).thenAccept(result -> System.out.println("Result: " + result));
-         /* thenAccept() 和 thenApply() 的不同在于它不返回任何结果，它只是对自己的异步任务完成后的结果进行消费 */
+        CompletableFuture<Void> allOf = CompletableFuture.allOf(completableFuture, completableFutureAnother);
+        /* allOf() 方法接收一个CompletableFuture数组作为参数，当所有CompletableFuture都完成时，返回一个新的CompletableFuture */
 
+        CompletableFuture<Object> anyOf = CompletableFuture.anyOf(completableFuture, completableFutureAnother);
+        /* anyOf() 方法接收一个CompletableFuture数组作为参数，当任意一个CompletableFuture完成时，返回一个新的CompletableFuture */
 
-        
-                
-        CompletableFuture<String> thenCombine = CompletableFuture.supplyAsync(() -> callExternalService())
-                .thenCombine(CompletableFuture.supplyAsync(() -> callExternalService()), (result1, result2) -> result1 + result2);
+        CompletableFuture<String> thenApply = completableFuture.thenApply(result -> callAnotherExternalService(result + "new input"));
+        /* thenApply() 方法接收一个函数作为参数，该函数接收上一个异步任务的结果，并返回一个新的结果 */
+
+        CompletableFuture<String> thenApplyAsync = completableFuture.thenApplyAsync(result -> callAnotherExternalService(result + "new input"), localThreadPool);
+        /* thenApplyAsync() 方法接收一个函数作为参数，该函数接收上一个异步任务的结果，并返回一个新的结果，并使用新线程执行 */
+
+        CompletableFuture<String> thenCompose = completableFuture.thenCompose(result -> CompletableFuture.supplyAsync(() -> callAnotherExternalService(result + "new input")));
+        /* thenCompose() 方法接收一个函数作为参数，该函数接收上一个异步任务的结果，并返回一个新的CompletableFuture，该CompletableFuture会使用新线程执行 */
+
+        CompletableFuture<String> thenComposeAsync = completableFuture.thenComposeAsync(result -> CompletableFuture.supplyAsync(() -> callAnotherExternalService(result + "new input")), localThreadPool);
+        /* thenComposeAsync() 方法接收一个函数作为参数，该函数接收上一个异步任务的结果，并返回一个新的CompletableFuture，该CompletableFuture会使用新线程执行 */
+                        
+        CompletableFuture<String> thenCombine = completableFuture.thenCombine(completableFutureAnother, (result, resultAnother) -> result + resultAnother);
+        /* thenCombine() 方法接收两个CompletableFuture作为参数，并使用新线程执行，并返回一个新的结果 */
+
+        CompletableFuture<String> thenCombineAsync = completableFuture.thenCombineAsync(completableFutureAnother, (result, resultAnother) -> result + resultAnother, localThreadPool);
+        /* thenCombineAsync() 方法接收两个CompletableFuture作为参数，并使用新线程执行，并返回一个新的结果 */
+
+        completableFuture.thenAccept(result -> System.out.println("Result: " + result));
+        /* thenAccept() 方法接收一个函数作为参数，该函数接收上一个异步任务的结果，但不返回新的结果 */
+
+        completableFuture.thenAcceptAsync(result -> System.out.println("Result: " + result), localThreadPool);
+
+        completableFuture.thenRun(() -> System.out.println("Runnable task"));
+        /* thenRun() 方法接收一个Runnable作为参数，该Runnable不接收任何参数，也不返回任何结果 */
+
+        completableFuture.thenRunAsync(() -> System.out.println("Runnable task"), localThreadPool);
+        /* thenRunAsync() 方法接收一个Runnable作为参数，该Runnable不接收任何参数，也不返回任何结果，并使用新线程执行 */
     }
 
     public static void threadMethods() throws InterruptedException {
