@@ -65,6 +65,20 @@ public class MyThread extends Thread {
         localThreadPool.shutdown();
     }
 
+    public static void completableFutureMethods() {
+        @SuppressWarnings("unused")
+        CompletableFuture<String> thenApply = CompletableFuture.supplyAsync(() -> callExternalService()).thenApply(result -> callAnotherExternalService(result + "new input"));
+
+        CompletableFuture.supplyAsync(() -> callExternalService()).thenAccept(result -> System.out.println("Result: " + result));
+         /* thenAccept() 和 thenApply() 的不同在于它不返回任何结果，它只是对自己的异步任务完成后的结果进行消费 */
+
+
+        
+                
+        CompletableFuture<String> thenCombine = CompletableFuture.supplyAsync(() -> callExternalService())
+                .thenCombine(CompletableFuture.supplyAsync(() -> callExternalService()), (result1, result2) -> result1 + result2);
+    }
+
     public static void threadMethods() throws InterruptedException {
         Thread thread = new Thread(new MyThread());
         thread.start();
@@ -78,5 +92,10 @@ public class MyThread extends Thread {
     private static String callExternalService() {
         // 模拟调用外部服务，并返回响应
         return "External Service Response";
+    }
+
+    private static String callAnotherExternalService(String str) {
+        // 模拟调用其它外部服务，并返回响应
+        return "Another External Service Response" + str;
     }
 }
