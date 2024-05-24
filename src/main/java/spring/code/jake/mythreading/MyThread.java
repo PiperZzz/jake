@@ -50,13 +50,11 @@ public class MyThread extends Thread {
         CompletableFuture.runAsync(() -> callExternalService()); // CompletableFuture默认会使用全局线程池ForkJoinPool
     }
 
-    public static void completableFutureSupply() throws InterruptedException, ExecutionException {
+    public static void completableFutureSupply() throws InterruptedException, ExecutionException{
         ExecutorService localThreadPool = Executors.newFixedThreadPool(3);
 
         CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> callExternalService(),
                 localThreadPool);
-
-        completableFuture.join();
 
         String result = completableFuture.get();
 
