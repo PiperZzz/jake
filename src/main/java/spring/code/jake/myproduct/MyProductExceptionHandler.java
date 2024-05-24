@@ -9,9 +9,9 @@ import org.slf4j.*;
 public class MyProductExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(MyProductExceptionHandler.class);
 
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public void handleGenericException(RuntimeException e) {
+    @ExceptionHandler(MyProductException.class)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Resource Not Found")
+    public void handleMyProductException(MyProductException e) {
         logger.error("An error occurred: {}", e.getMessage(), e);
     }
 

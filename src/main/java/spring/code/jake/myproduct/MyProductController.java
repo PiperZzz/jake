@@ -40,7 +40,7 @@ public class MyProductController {
         List<MyProductDTO> products = myProductService.getProductsByName(keyword, pageNumber, pageSize);
 
         if (products == null) {
-            throw new RuntimeException(""); // 交给RestControllerAdvice异常处理器去处理是最佳实践
+            throw new MyProductException("More Specific Reason Here"); // 交给RestControllerAdvice异常处理器去处理是最佳实践
         } else if (products.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"); // 实际开发中不推荐，这里只做演示
         }
