@@ -10,17 +10,13 @@ import jakarta.servlet.http.HttpServletResponse;
 public class MyProductInterceptor implements HandlerInterceptor {
     
     @Override
+    @SuppressWarnings("null")
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
-            if (MyJwtUtil.isTokenValid(token)) {
-                // 身份验证成功
-                return true;
-            }
+            return MyJwtUtil.isTokenValid(token);
         }
-        // 身份验证失败
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        return false;
+        return false; // 身份验证失败
     }
 }
