@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "tag")
+@Table(name = "tags")
 @NoArgsConstructor
 public class Tag {
     @Id
@@ -18,5 +18,5 @@ public class Tag {
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    private MyProductEntity product;
+    private MyProductEntity myProductEntity;
 }

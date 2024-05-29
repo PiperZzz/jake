@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @NoArgsConstructor
 public class MyProductEntity {
     @Id
@@ -17,6 +17,6 @@ public class MyProductEntity {
     @Column(name = "product_name", nullable = false)
     private String productName;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "myProductEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tag> tags = new HashSet<>();
 }
