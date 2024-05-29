@@ -17,6 +17,6 @@ public class Tag {
     private String tag;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = true)
+    @JoinColumn(name = "product_id", nullable = false)
     private MyProductEntity product;
 }
