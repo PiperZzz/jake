@@ -122,6 +122,6 @@ public class MyThread extends Thread {
 
     private static String callAnotherExternalService(String str) {
         // 模拟调用其它外部服务，并返回响应
-        return "Another External Service Response" + str;
+        return "Another External Service Response - " + str;
     }
 }
