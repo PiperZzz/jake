@@ -1,6 +1,6 @@
 package spring.code.jake.myproduct;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,8 +39,6 @@ public class MyProductServiceTests {
         when(myProductsRepository.findById(productId)).thenReturn(Optional.of(productEntity));
         when(myProductsRepository.save(any(MyProductEntity.class))).thenReturn(productEntity);
         when(myProductDTOMapper.apply(any(MyProductEntity.class))).thenReturn(productDTO); 
-        
-        // Spy
 
         MyProductDTO updatedProductDTO = myProductService.updateProductById(productId, productDTO);
 
