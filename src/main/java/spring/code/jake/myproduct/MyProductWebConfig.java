@@ -5,16 +5,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @Configuration
+@SuppressWarnings("null")
 public class MyProductWebConfig implements WebMvcConfigurer {
-    private final MyProductAuthorizationInterceptor myProductInterceptor;
+    private final MyProductAuthorizationInterceptor myProductAuthorizationInterceptor;
+    private final MyProductAuthenticationInterceptor myProductAuthenticationInterceptor;
 
-    public MyProductWebConfig(MyProductAuthorizationInterceptor myProductInterceptor) {
-        this.myProductInterceptor = myProductInterceptor;
+    public MyProductWebConfig(MyProductAuthorizationInterceptor myProductAuthorizationInterceptor,
+            MyProductAuthenticationInterceptor myProductAuthenticationInterceptor) {
+        this.myProductAuthorizationInterceptor = myProductAuthorizationInterceptor;
+        this.myProductAuthenticationInterceptor = myProductAuthenticationInterceptor;
     }
 
     @Override
-    @SuppressWarnings("null")
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(myProductInterceptor).addPathPatterns("/v1/api/**");
+        registry.addInterceptor(myProductAuthorizationInterceptor).addPathPatterns("/v1/api/**");
+        registry.addInterceptor(myProductAuthenticationInterceptor).addPathPatterns("/v1/api/**");
     }
 }

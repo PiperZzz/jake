@@ -13,9 +13,9 @@ public class MyProductAuthenticationInterceptor implements HandlerInterceptor {
             throws Exception {
         String bearerToken = MyJwtUtil.resolveToken(request);
         if (bearerToken != null) {
-            return MyJwtUtil.isTokenValid(bearerToken);
+            return MyJwtUtil.isTokenValid(bearerToken); // Update Authentication Logic 
         } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Update Authentication Exception
             return false; // 身份验证失败
         }
     }

@@ -2,10 +2,8 @@ package spring.code.jake.myproduct;
 
 import java.util.*;
 import org.springframework.http.*;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import jakarta.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/v1/api")
@@ -69,19 +67,19 @@ public class MyProductController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<String> createUser(@Validated @RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody User user) {
         // 使用 RequestBody 是 POST 方法最常用的方式，也是现代 Web API 开发中常用的方式
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
         // 201 Resource Created
     }
 
     @PutMapping("/user/{userId}")
-    public ResponseEntity<String> updateUser(@PathVariable("userId") Long userId, @Validated @RequestBody User user) {
+    public ResponseEntity<String> updateUser(@PathVariable("userId") Long userId, @RequestBody User user) {
         // 使用 RequestBody 是 PUT 方法最常用的方式
         // 通常会结合 Path Parameter 或 Query Parameter 先获取要更新的数据实体
         return ResponseEntity.ok("User updated successfully");
     }
 
-    record User(@NotBlank String userName, @NotBlank String password) {
+    record User(String userName, String password) {
     }
 }
