@@ -6,9 +6,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @Configuration
 public class MyProductWebConfig implements WebMvcConfigurer {
-    private final MyProductInterceptor myProductInterceptor;
+    private final MyProductAuthorizationInterceptor myProductInterceptor;
 
-    public MyProductWebConfig(MyProductInterceptor myProductInterceptor) {
+    public MyProductWebConfig(MyProductAuthorizationInterceptor myProductInterceptor) {
         this.myProductInterceptor = myProductInterceptor;
     }
 

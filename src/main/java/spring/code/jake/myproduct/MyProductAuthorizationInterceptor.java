@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 @SuppressWarnings("null")
-public class MyProductInterceptor implements HandlerInterceptor {
+public class MyProductAuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

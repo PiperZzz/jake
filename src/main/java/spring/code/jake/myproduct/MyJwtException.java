@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import jakarta.security.auth.message.AuthException;
 
-@ResponseStatus(code = HttpStatus.UNAUTHORIZED, reason = "JWT Token Authentication Required")
+@ResponseStatus(code = HttpStatus.UNAUTHORIZED, reason = "Authorization Required")
 public class MyJwtException extends AuthException {
     
     public MyJwtException(String message) {
