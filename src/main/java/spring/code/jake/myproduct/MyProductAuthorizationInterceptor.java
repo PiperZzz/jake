@@ -14,10 +14,9 @@ public class MyProductAuthorizationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String authHeader = request.getHeader("Authorization");
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            return MyJwtUtil.isTokenValid(token);
+        String bearerToken = MyJwtUtil.resolveToken(request);
+        if (bearerToken != null) {
+            return MyJwtUtil.isTokenValid(bearerToken);
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false; // 身份验证失败

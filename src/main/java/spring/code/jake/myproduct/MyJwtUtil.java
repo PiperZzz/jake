@@ -15,9 +15,9 @@ public class MyJwtUtil {
     private static String secretKey;
 
     @Value("${security.jwt.token.expire-length}")
-    private long validityInMilliseconds;
+    private static long validityInMilliseconds;
 
-    public String generateToken(Authentication authentication) {// Authentication类是Spring Security中用于处理身份验证和授权的关键类
+    public static String generateToken(Authentication authentication) {// Authentication类是Spring Security中用于处理身份验证和授权的关键类
         String username = authentication.getName();// 提取用户名
         Collection<? extends GrantedAuthority> roles = authentication.getAuthorities(); // 提取用户角色集合
 
@@ -34,12 +34,13 @@ public class MyJwtUtil {
                 .compact(); // 生成token
     }
 
-    public String resolveToken(HttpServletRequest req) {
+    public static String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
+        } else {
+            return null;
         }
-        return null;
     }
 
     public static boolean isTokenValid(String token) {
@@ -51,11 +52,11 @@ public class MyJwtUtil {
         }
     }
 
-    public String getUsername(String token) {
+    public static String getUsername(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public Authentication getAuthentication(String token) {
+    public static Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         String[] roles = claims.get("roles", String.class).split(",");
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), "",
