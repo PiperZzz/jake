@@ -1,15 +1,19 @@
 package spring.code.jake.myproduct;
 
+import java.io.Serializable;
 import java.util.*;
+
+import org.hibernate.annotations.DynamicInsert;
+
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Entity
+@DynamicInsert // 为避免null被JPA替换成占位符导致Table Default Value失效
 @Table(name = "products")
 @NoArgsConstructor
-public class MyProductEntity {
+public class MyProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
