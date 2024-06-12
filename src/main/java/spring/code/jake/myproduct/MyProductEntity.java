@@ -15,7 +15,8 @@ import lombok.*;
 @NoArgsConstructor
 public class MyProductEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
+    @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_sequence", allocationSize = 1) // sequenceName是PostgreSQL内定义的序列名
     private Long id;
 
     @Column(name = "product_name", nullable = false)
