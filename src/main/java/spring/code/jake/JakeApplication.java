@@ -10,11 +10,16 @@ import spring.code.jake.mythreading.MyThread;
 @EnableCaching
 public class JakeApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(JakeApplication.class, args);
+		
+		/*  */
 		System.out.println(System.getProperty("java.version"));
-
-		MyThread.completableFutureSupply("From Main Thread");
+		try {
+			MyThread.completableFutureSupply("From Main Thread");
+		} catch (Exception e) {
+			
+		}
 	}
 
 }
