@@ -11,18 +11,16 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.slf4j.*;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class MyProductService {
 
     private static final Logger logger = LoggerFactory.getLogger(MyProductService.class);
 
     private final MyProductsRepository myProductsRepository;
     private final MyProductDTOMapper myProductDTOMapper;
-
-    public MyProductService(MyProductsRepository myProductsRepository, MyProductDTOMapper myProductDTOMapper) {
-        this.myProductsRepository = myProductsRepository;
-        this.myProductDTOMapper = myProductDTOMapper;
-    }
 
     @Cacheable("myProducts")
     public MyProductDTO getProductById(Long productId) {
