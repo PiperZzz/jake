@@ -10,7 +10,7 @@ import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-public class MyJwtUtil {
+public final class MyJwtUtil {
     @Value("${security.jwt.token.secret-key}")
     private static String secretKey;
 
