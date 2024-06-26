@@ -18,7 +18,8 @@ public class MyProductWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(myProductAuthorizationInterceptor).addPathPatterns("/v1/api/**");
-        registry.addInterceptor(myProductAuthenticationInterceptor).addPathPatterns("/v1/api/**");
+        // registry.addInterceptor(myProductAuthorizationInterceptor).addPathPatterns("/v1/api/**");
+        // registry.addInterceptor(myProductAuthenticationInterceptor).addPathPatterns("/v1/api/**");
+        // TODO: 用Spring Security的Filter来做Security，Interceptor用于其它拦截任务。
     }
 }
