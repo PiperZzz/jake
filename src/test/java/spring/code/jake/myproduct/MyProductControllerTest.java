@@ -37,7 +37,7 @@ public class MyProductControllerTest {
     @Test
     @WithMockUser // 添加这行以模拟一个已认证用户
     void testGetUserPassword() throws Exception {
-        mockMvc.perform(get("/v1/api/user")
+        mockMvc.perform(get("/api/v1/user")
                 .param("userName", "testUser")
                 .param("password", "testPass"))
                 .andExpect(status().isOk())
@@ -49,7 +49,7 @@ public class MyProductControllerTest {
     void testGetProducts() throws Exception {
         when(myProductService.getProductsByName(anyString(), anyInt(), anyInt())).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/v1/api/products")
+        mockMvc.perform(get("/api/v1/products")
                 .param("keyword", "test")
                 .param("pageNumber", "1")
                 .param("pageSize", "10"))
@@ -61,7 +61,7 @@ public class MyProductControllerTest {
     void testCreateUser() throws Exception {
         String userJson = "{\"userName\":\"testUser\", \"password\":\"testPass\"}";
 
-        mockMvc.perform(post("/v1/api/user")
+        mockMvc.perform(post("/api/v1/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userJson))
                 .andExpect(status().isCreated())
