@@ -1,4 +1,4 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.product.config;
 
 import org.springframework.cache.annotation.*;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -15,7 +15,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 
 @Configuration
 @EnableCaching
-public class MyProductCacheConfig implements CachingConfigurer {
+public class ProductCacheConfig implements CachingConfigurer {
 
     @Bean
     @Primary

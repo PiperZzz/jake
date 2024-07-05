@@ -1,13 +1,15 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.product.model;
 
+import lombok.*;
 import java.io.Serializable;
 import jakarta.persistence.*;
-import lombok.*;
 
 @Data
 @Entity
 @Table(name = "tags")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +19,6 @@ public class Tag implements Serializable {
     private String tag;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private MyProductEntity myProductEntity;
+    @JoinColumn(name = "product_id_seq", nullable = false)
+    private Product product;
 }

@@ -1,17 +1,21 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.product.controller;
 
 import java.util.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-@RestController
-@RequestMapping("/api/v1")
-public class MyProductController {
-    private final MyProductService myProductService;
+import spring.code.jake.myprojects.product.dto.ProductDTO;
+import spring.code.jake.myprojects.product.exception.ProductException;
+import spring.code.jake.myprojects.product.service.ProductService;
 
-    public MyProductController(MyProductService myProductService) {
-        this.myProductService = myProductService;
+@RestController
+@RequestMapping("/product/api/v1")
+public class ProductController {
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping("/user")
@@ -30,15 +34,15 @@ public class MyProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<MyProductDTO>> getProducts(
+    public ResponseEntity<List<ProductDTO>> getProducts(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         // Query Parameter 另一个常见用途是分页 Pagination
-        List<MyProductDTO> products = myProductService.getProductsByName(keyword, pageNumber, pageSize);
+        List<ProductDTO> products = productService.getProductsByName(keyword, pageNumber, pageSize);
 
         if (products == null) {
-            throw new MyProductException("More Specific Reason Here"); // 交给RestControllerAdvice异常处理器去处理是最佳实践
+            throw new ProductException("More Specific Reason Here"); // 交给RestControllerAdvice异常处理器去处理是最佳实践
         } else if (products.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"); // 实际开发中不推荐，这里只做演示
         }

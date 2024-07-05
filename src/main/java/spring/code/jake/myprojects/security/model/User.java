@@ -1,3 +1,4 @@
+package spring.code.jake.myprojects.security.model;
 // package spring.code.jake.myproduct;
 
 // import java.util.*;

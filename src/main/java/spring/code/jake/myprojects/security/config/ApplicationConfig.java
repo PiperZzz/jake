@@ -1,4 +1,4 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class ApplicationConfig {
     // private final UserRepository userRepository;
 
     @Bean
-    public UserDetailsService userDetailsService(String username) {
+    public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) {

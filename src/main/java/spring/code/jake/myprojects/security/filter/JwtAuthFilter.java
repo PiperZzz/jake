@@ -1,6 +1,8 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.security.filter;
 
 import lombok.RequiredArgsConstructor;
+import spring.code.jake.myprojects.security.service.JwtService;
+
 import java.io.IOException;
 
 import org.springframework.lang.NonNull;
@@ -17,9 +19,9 @@ import jakarta.servlet.http.*;
 
 @Component
 @RequiredArgsConstructor
-public class MyJwtAuthFilter extends OncePerRequestFilter {
+public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private final MyJwtService myJwtService;
+    private final JwtService myJwtService;
     private final UserDetailsService userDetailsService;
 
     @Override

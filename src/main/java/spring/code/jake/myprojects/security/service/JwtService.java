@@ -1,4 +1,4 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.security.service;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -18,12 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Service
-public class MyJwtService {
-    
-    private final String SECRET_KEY;    
+public class JwtService {
+
+    private final String SECRET_KEY;
     private final long DURATION;
 
-    public MyJwtService(@Value("${security.jwt.token.secret-key}") String secretKey, @Value("${security.jwt.token.expire-length}") long duration) {
+    public JwtService(@Value("${security.jwt.token.secret-key}") String secretKey,
+            @Value("${security.jwt.token.expire-length}") long duration) {
         SECRET_KEY = secretKey;
         DURATION = duration;
 
@@ -34,7 +35,7 @@ public class MyJwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken (UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) {
         Map<String, Object> Claims = new HashMap<>();
         return createToken(Claims, userDetails.getUsername());
     }

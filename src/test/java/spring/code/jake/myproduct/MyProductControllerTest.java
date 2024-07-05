@@ -20,14 +20,17 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(MyProductController.class)
+import spring.code.jake.myprojects.product.controller.ProductController;
+import spring.code.jake.myprojects.product.service.ProductService;
+
+@WebMvcTest(ProductController.class)
 public class MyProductControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private MyProductService myProductService;
+    private ProductService myProductService;
 
     @BeforeEach
     void setUp() {

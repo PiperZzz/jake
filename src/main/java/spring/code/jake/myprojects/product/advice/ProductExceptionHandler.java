@@ -1,22 +1,24 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.product.advice;
 
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import spring.code.jake.myprojects.product.exception.ProductException;
+
 import org.slf4j.*;
 
 @RestControllerAdvice
-public class MyProductExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(MyProductExceptionHandler.class);
+public class ProductExceptionHandler {
+    private static final Logger logger = LoggerFactory.getLogger(ProductExceptionHandler.class);
 
-    @ExceptionHandler(MyProductException.class)
+    @ExceptionHandler(ProductException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Resource Not Found")
-    public void handleMyProductException(MyProductException e) {
+    public void handleMyProductException(ProductException e) {
         logger.error("An error occurred: {}", e.getMessage(), e);
     }
 
-    
-    @SuppressWarnings("unused") // 仅作HTTP Status Code示例
+    @SuppressWarnings("unused") //TODO: 仅作HTTP Status Code示例
     private String commonHttpStatusCode(int i) {
         switch (i) {
             case 400:

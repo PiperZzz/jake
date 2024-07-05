@@ -1,4 +1,4 @@
-package spring.code.jake.myproduct;
+package spring.code.jake.myprojects.product.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -8,11 +8,12 @@ import org.slf4j.*;
 
 @Aspect
 @Component
-public class MyProductServiceAspect {
-    private static final Logger logger = LoggerFactory.getLogger(MyProductServiceAspect.class);
+public class ProductServiceAspect {
+    private static final Logger logger = LoggerFactory.getLogger(ProductServiceAspect.class);
 
     @Pointcut("within(@org.springframework.stereotype.Service *)")
-    public void myProductService() {}
+    public void myProductService() {
+    }
 
     @Before("myProductService()")
     public void logBeforeServiceMethods(JoinPoint joinPoint) {
@@ -38,4 +39,4 @@ public class MyProductServiceAspect {
         logger.info(joinPoint.getSignature() + " executed in " + executionTime + "ms");
         return proceed;
     }
-}   
+}

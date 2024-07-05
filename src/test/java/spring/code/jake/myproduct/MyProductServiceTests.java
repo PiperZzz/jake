@@ -12,19 +12,26 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
+import spring.code.jake.myprojects.product.dao.ProductsRepository;
+import spring.code.jake.myprojects.product.dto.ProductDTO;
+import spring.code.jake.myprojects.product.exception.ProductException;
+import spring.code.jake.myprojects.product.model.Product;
+import spring.code.jake.myprojects.product.service.ProductService;
+import spring.code.jake.myprojects.product.util.ProductDTOMapper;
+
 import java.util.*;
 
 @SpringBootTest
 public class MyProductServiceTests {
 
     @Mock
-    private MyProductsRepository myProductsRepository;
+    private ProductsRepository myProductsRepository;
 
     @Mock
-    private MyProductDTOMapper myProductDTOMapper;
+    private ProductDTOMapper myProductDTOMapper;
 
     @InjectMocks
-    private MyProductService myProductService;
+    private ProductService myProductService;
 
     @BeforeEach
     public void setUp() {
@@ -34,15 +41,15 @@ public class MyProductServiceTests {
     @Test
     public void testUpdateProductById() {
         Long productId = 1L;
-        MyProductDTO productDTO = new MyProductDTO("UpdatedProduct", new ArrayList<>());
-        MyProductEntity productEntity = new MyProductEntity();
+        ProductDTO productDTO = new ProductDTO("UpdatedProduct", new ArrayList<>());
+        Product productEntity = new Product();
         productEntity.setProductName("OldProduct");
 
         when(myProductsRepository.findById(productId)).thenReturn(Optional.of(productEntity));
-        when(myProductsRepository.save(any(MyProductEntity.class))).thenReturn(productEntity);
-        when(myProductDTOMapper.apply(any(MyProductEntity.class))).thenReturn(productDTO); 
+        when(myProductsRepository.save(any(Product.class))).thenReturn(productEntity);
+        when(myProductDTOMapper.apply(any(Product.class))).thenReturn(productDTO);
 
-        MyProductDTO updatedProductDTO = myProductService.updateProductById(productId, productDTO);
+        ProductDTO updatedProductDTO = myProductService.updateProductById(productId, productDTO);
 
         assertEquals("UpdatedProduct", updatedProductDTO.productName());
         verify(myProductsRepository).save(productEntity);
@@ -52,16 +59,16 @@ public class MyProductServiceTests {
     @Test
     public void testUpdateProductById_ProductNotFound() {
         Long productId = 1L;
-        MyProductDTO productDTO = new MyProductDTO("UpdatedProduct", new ArrayList<>());
+        ProductDTO productDTO = new ProductDTO("UpdatedProduct", new ArrayList<>());
 
         when(myProductsRepository.findById(productId)).thenReturn(Optional.empty());
 
-        MyProductException exception = assertThrows(MyProductException.class, () -> {
+        ProductException exception = assertThrows(ProductException.class, () -> {
             myProductService.updateProductById(productId, productDTO);
         });
 
         assertEquals("The Product to update does not exist", exception.getMessage());
-        verify(myProductsRepository, never()).save(any(MyProductEntity.class));
+        verify(myProductsRepository, never()).save(any(Product.class));
     }
 
     @Test
@@ -69,14 +76,14 @@ public class MyProductServiceTests {
         String keyword = "Test";
         int page = 0;
         int size = 10;
-        MyProductEntity productEntity = new MyProductEntity();
-        MyProductDTO productDTO = new MyProductDTO("TestProduct", new ArrayList<>());
+        Product productEntity = new Product();
+        ProductDTO productDTO = new ProductDTO("TestProduct", new ArrayList<>());
 
         when(myProductsRepository.findByProductNameContaining(eq(keyword), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(Collections.singletonList(productEntity)));
-        when(myProductDTOMapper.apply(any(MyProductEntity.class))).thenReturn(productDTO);
+        when(myProductDTOMapper.apply(any(Product.class))).thenReturn(productDTO);
 
-        List<MyProductDTO> products = myProductService.getProductsByName(keyword, page, size);
+        List<ProductDTO> products = myProductService.getProductsByName(keyword, page, size);
 
         assertEquals(1, products.size());
         assertEquals("TestProduct", products.get(0).productName());
@@ -84,4 +91,3 @@ public class MyProductServiceTests {
         verify(myProductDTOMapper).apply(productEntity);
     }
 }
-
