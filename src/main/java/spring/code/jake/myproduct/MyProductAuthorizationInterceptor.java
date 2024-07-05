@@ -11,12 +11,18 @@ import jakarta.servlet.http.HttpServletResponse;
 @SuppressWarnings("null")
 public class MyProductAuthorizationInterceptor implements HandlerInterceptor {
 
+    private final MyJwtService myJwtService;
+
+    public MyProductAuthorizationInterceptor(MyJwtService myJwtService) {
+        this.myJwtService = myJwtService;
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String bearerToken = MyJwtUtil.resolveToken(request);
+        String bearerToken = MyJwtService.resolveToken(request);
         if (bearerToken != null) {
-            return MyJwtUtil.isTokenValid(bearerToken);
+            return myJwtService.isTokenValid(bearerToken);
         } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false; // 身份验证失败

@@ -13,6 +13,8 @@ import lombok.*;
 @DynamicInsert // 为避免null被JPA替换成占位符导致Table Default Value失效
 @Table(name = "products")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MyProductEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
