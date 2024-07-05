@@ -1,8 +1,14 @@
 package spring.code.jake.myproduct;
 
-import lombok.*;
+import lombok.RequiredArgsConstructor;
 import java.io.IOException;
 
+import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,6 +20,7 @@ import jakarta.servlet.http.*;
 public class MyJwtAuthFilter extends OncePerRequestFilter {
 
     private final MyJwtService myJwtService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -27,8 +34,17 @@ public class MyJwtAuthFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
-        userName = myJwtService.getUsername(jwt);
-
+        userName = myJwtService.extractUsername(jwt);
+        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            final UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            if (myJwtService.isTokenValid(jwt, userDetails)) {
+                final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken
+                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+        }
     }
 
 }

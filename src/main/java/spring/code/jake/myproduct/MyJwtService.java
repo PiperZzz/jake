@@ -7,11 +7,13 @@ import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.function.Function;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -27,22 +29,25 @@ public class MyJwtService {
 
     }
 
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractClaims(token);
+        return claimsResolver.apply(claims);
+    }
 
-    public String generateToken(Authentication authentication) {// Authentication类是Spring Security中用于处理身份验证和授权的关键类
-        String username = authentication.getName();// 提取用户名
-        Collection<? extends GrantedAuthority> roles = authentication.getAuthorities(); // 提取用户角色集合
+    public String generateToken (UserDetails userDetails) {
+        Map<String, Object> Claims = new HashMap<>();
+        return createToken(Claims, userDetails.getUsername());
+    }
 
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + DURATION); // 设置token的过期时间
-        Claims claims = Jwts.claims().setSubject(username); // Jwts的静态方法claims()设置token的主体部分，即用户名，返回的是一个Claims对象
-        claims.put("roles", roles.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())); // 设置token的负载部分的roles属性
+    private String createToken(Map<String, Object> extractClaims, String subject) {
 
-        return Jwts.builder() // Jwts的静态方法builder()创建一个JwtBuilder对象
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY) // 设置token的签名算法和密钥
-                .compact(); // 生成token
+        return Jwts.builder()
+                .setClaims(extractClaims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + DURATION))
+                .signWith(getSignInkey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public static String resolveToken(HttpServletRequest req) {
@@ -54,17 +59,22 @@ public class MyJwtService {
         }
     }
 
-    public boolean isTokenValid(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(getSignInkey()).build().parseClaimsJws(token);
-            return true;
-        } catch (IllegalArgumentException e) {
-            throw new JwtException(e.getMessage());
-        }
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public String getUsername(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSignInkey()).build().parseClaimsJws(token).getBody().getSubject();
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
     public Authentication getAuthentication(String token) {
