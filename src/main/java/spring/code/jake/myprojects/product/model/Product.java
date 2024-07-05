@@ -22,6 +22,6 @@ public class Product implements Serializable {
     @Column(name = "product_name", nullable = false)
     private String productName;
 
-    @OneToMany(mappedBy = "Product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tag> tags;
 }
