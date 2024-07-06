@@ -19,7 +19,7 @@ import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.service.ProductService;
 
 @RestController
-@RequestMapping("/product/api/v1")
+@RequestMapping("/api/v1/products")
 public class ProductController {
     private final ProductService productService;
 
