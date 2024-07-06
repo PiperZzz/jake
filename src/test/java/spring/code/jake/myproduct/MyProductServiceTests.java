@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
-import spring.code.jake.myprojects.product.dao.ProductsRepository;
+import spring.code.jake.myprojects.product.dao.ProductRepository;
 import spring.code.jake.myprojects.product.dto.ProductDTO;
 import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.model.Product;
@@ -25,7 +25,7 @@ import java.util.*;
 public class MyProductServiceTests {
 
     @Mock
-    private ProductsRepository myProductsRepository;
+    private ProductRepository myProductsRepository;
 
     @Mock
     private ProductDTOMapper myProductDTOMapper;

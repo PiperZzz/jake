@@ -1,7 +1,10 @@
 package spring.code.jake.myprojects.product.model;
 
-import java.util.*;
-import lombok.*;
+import java.util.Set;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import java.io.Serializable;
 import org.hibernate.annotations.DynamicInsert;
 import jakarta.persistence.*;

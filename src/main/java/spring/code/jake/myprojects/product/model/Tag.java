@@ -1,6 +1,9 @@
 package spring.code.jake.myprojects.product.model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import java.io.Serializable;
 import jakarta.persistence.*;
 

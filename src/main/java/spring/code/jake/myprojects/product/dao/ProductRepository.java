@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @Repository
-public interface ProductsRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE p.productName LIKE %:keyword%")
     // 上面的JPQL等价于这段SQL：SELECT p.* FROM product AS p WHERE p.product_name LIKE

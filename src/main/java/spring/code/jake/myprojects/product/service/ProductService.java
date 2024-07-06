@@ -1,6 +1,6 @@
 package spring.code.jake.myprojects.product.service;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -9,10 +9,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import lombok.AllArgsConstructor;
-import spring.code.jake.myprojects.product.dao.ProductsRepository;
+import spring.code.jake.myprojects.product.dao.ProductRepository;
 import spring.code.jake.myprojects.product.dto.ProductDTO;
 import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.model.Product;
@@ -24,7 +25,7 @@ public class ProductService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
-    private final ProductsRepository productsRepository;
+    private final ProductRepository productsRepository;
     private final ProductDTOMapper productDTOMapper;
 
     @Cacheable("myProducts")
