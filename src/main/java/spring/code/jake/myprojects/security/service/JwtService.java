@@ -36,8 +36,12 @@ public class JwtService {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractClaims(token);
+        final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder().setSigningKey(getSignInkey()).build().parseClaimsJws(token).getBody();
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -88,10 +92,6 @@ public class JwtService {
         String[] roles = claims.get("roles", String.class).split(",");
         return new UsernamePasswordAuthenticationToken(claims.getSubject(), "",
                 Arrays.stream(roles).map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
-    }
-
-    private Claims extractClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSignInkey()).build().parseClaimsJws(token).getBody();
     }
 
     private Key getSignInkey() {
