@@ -5,17 +5,19 @@ import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
 import java.util.Collection;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.CollectionTable;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GenerationType;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,22 +31,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    
+    @Column(nullable = false, unique = true)
     private String username;
-    private String password;
-    private boolean enabled;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "authority")
-    private Collection<? extends GrantedAuthority> authorities;
+    @Column(nullable = false)
+    private String password;
     
-    private boolean credentialsNonExpired;
-    private boolean accountNonExpired;
-    private boolean accountNonLocked;
+    @Builder.Default
+    private boolean enabled = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
+    
+    @Builder.Default
+    private boolean credentialsNonExpired = true;
+
+    @Builder.Default
+    private boolean accountNonExpired = true;
+
+    @Builder.Default
+    private boolean accountNonLocked = true;
 
     @Override
     public String getUsername() {
@@ -63,7 +78,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return roles;
     }
 
     @Override

@@ -10,7 +10,7 @@ import spring.code.jake.myprojects.security.dao.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class SecurityConfig {
 
     private final UserRepository userRepository;
 
@@ -19,8 +19,7 @@ public class ApplicationConfig {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) {
-                // return userRepository.findByUsername(username);
-                return null;
+                return userRepository.findByUsername(username).orElse(null);
             }
         };
     }
