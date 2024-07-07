@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import lombok.RequiredArgsConstructor;
 import spring.code.jake.myprojects.auth.filter.JwtAuthFilter;
+import spring.code.jake.myprojects.auth.security.CustomAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -17,17 +18,18 @@ import spring.code.jake.myprojects.auth.filter.JwtAuthFilter;
 public class SecurityConfig {
 
     private final JwtAuthFilter JwtAuthFilter;
+    private final CustomAuthenticationProvider CustomAuthenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return null;
-        // httpSecurity
-        //         .csrf(csrf -> csrf.disable())
-        //         .authorizeRequests(requests -> requests.requestMatchers("").permitAll().anyRequest().authenticated())
-        //         .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        //         .authenticationProvider(null)
-        //         .addFilterBefore(JwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .authorizeRequests(requests -> requests.requestMatchers("/api/v1/**").permitAll().anyRequest().authenticated())
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(CustomAuthenticationProvider)
+                .addFilterBefore(JwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // return httpSecurity.build();
+        return httpSecurity.build();
     }
+
 }
