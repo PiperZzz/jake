@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import spring.code.jake.myprojects.product.dao.ProductRepository;
 import spring.code.jake.myprojects.product.dto.ProductDTO;
 import spring.code.jake.myprojects.product.exception.ProductException;
@@ -20,17 +20,17 @@ import spring.code.jake.myprojects.product.model.Product;
 import spring.code.jake.myprojects.product.util.ProductDTOMapper;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
-    private final ProductRepository productsRepository;
+    private final ProductRepository productRepository;
     private final ProductDTOMapper productDTOMapper;
 
     @Cacheable("myProducts")
     public ProductDTO getProductById(Long productId) {
-        Product product = productsRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductException("The Product does not exist"));
         return productDTOMapper.apply(product);
     }
@@ -38,10 +38,10 @@ public class ProductService {
     @Transactional
     @CacheEvict(value = "myProducts", key = "#productId")
     public ProductDTO updateProductById(long productId, ProductDTO productDTO) {
-        Product product = productsRepository.findById(productId)
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ProductException("The Product to update does not exist"));
         product.setProductName(productDTO.productName());
-        productsRepository.save(product);
+        productRepository.save(product);
         logger.info("Product with id {} and name {} updated successfully", productId, product.getProductName());
         return productDTOMapper.apply(product);
     }
@@ -49,7 +49,7 @@ public class ProductService {
     @Cacheable("myProductLists")
     public List<ProductDTO> getProductsByName(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return productsRepository.findByProductNameContaining(keyword, pageable)
+        return productRepository.findByProductNameContaining(keyword, pageable)
                 .stream()
                 .map(productDTOMapper)
                 .collect(Collectors.toList());
