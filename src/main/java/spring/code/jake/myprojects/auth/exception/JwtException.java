@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.security.exception;
+package spring.code.jake.myprojects.auth.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

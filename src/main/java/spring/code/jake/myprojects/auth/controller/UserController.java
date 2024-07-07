@@ -1,9 +1,9 @@
-package spring.code.jake.myprojects.security.controller;
+package spring.code.jake.myprojects.auth.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.security.service.CustomUserDetailsService;
+import spring.code.jake.myprojects.auth.service.CustomUserDetailsService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;

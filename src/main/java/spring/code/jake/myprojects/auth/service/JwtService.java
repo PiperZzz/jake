@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.security.service;
+package spring.code.jake.myprojects.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

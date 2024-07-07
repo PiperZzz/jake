@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.security.model;
+package spring.code.jake.myprojects.auth.model;
 
 
 

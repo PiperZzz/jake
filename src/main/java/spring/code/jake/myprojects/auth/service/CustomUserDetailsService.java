@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.security.service;
+package spring.code.jake.myprojects.auth.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.security.dao.UserRepository;
+import spring.code.jake.myprojects.auth.dao.UserRepository;
 
 @Service
 @RequiredArgsConstructor

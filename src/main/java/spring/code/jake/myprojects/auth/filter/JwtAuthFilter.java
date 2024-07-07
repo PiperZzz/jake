@@ -1,8 +1,8 @@
-package spring.code.jake.myprojects.security.filter;
+package spring.code.jake.myprojects.auth.filter;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.security.service.CustomUserDetailsService;
-import spring.code.jake.myprojects.security.service.JwtService;
+import spring.code.jake.myprojects.auth.service.CustomUserDetailsService;
+import spring.code.jake.myprojects.auth.service.JwtService;
 
 import java.io.IOException;
 
