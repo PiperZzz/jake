@@ -1,6 +1,7 @@
 package spring.code.jake.myprojects.security.filter;
 
 import lombok.RequiredArgsConstructor;
+import spring.code.jake.myprojects.security.service.CustomUserDetailsService;
 import spring.code.jake.myprojects.security.service.JwtService;
 
 import java.io.IOException;
@@ -9,7 +10,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -40,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userName = jwtService.extractUsername(jwt);
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+            final UserDetails userDetails = customUserDetailsService.loadUserByUsername(userName);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
