@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, DaoAuthenticationProvider authenticationProvider) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(requests -> requests.requestMatchers("/api/v1/**").permitAll().anyRequest().authenticated())
+                .authorizeRequests(requests -> requests.requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated())
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(JwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -51,7 +51,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 }

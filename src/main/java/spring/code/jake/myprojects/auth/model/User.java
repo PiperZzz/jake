@@ -39,6 +39,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, unique = true)
+    private String email;
     
     @Builder.Default
     private boolean enabled = true;
