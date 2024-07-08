@@ -5,11 +5,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.auth.dao.UserRepository;
 import spring.code.jake.myprojects.auth.dto.AuthenticationRequest;
 import spring.code.jake.myprojects.auth.dto.AuthenticationResponse;
 import spring.code.jake.myprojects.auth.dto.RegisterRequest;
 import spring.code.jake.myprojects.auth.model.User;
+import spring.code.jake.myprojects.auth.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor

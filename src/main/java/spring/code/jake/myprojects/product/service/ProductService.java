@@ -13,10 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.product.dao.ProductRepository;
 import spring.code.jake.myprojects.product.dto.ProductDTO;
 import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.model.Product;
+import spring.code.jake.myprojects.product.repository.ProductRepository;
 import spring.code.jake.myprojects.product.util.ProductDTOMapper;
 
 @Service

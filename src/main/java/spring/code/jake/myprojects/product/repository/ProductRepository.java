@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.product.dao;
+package spring.code.jake.myprojects.product.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

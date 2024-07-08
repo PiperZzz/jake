@@ -12,10 +12,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
-import spring.code.jake.myprojects.product.dao.ProductRepository;
 import spring.code.jake.myprojects.product.dto.ProductDTO;
 import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.model.Product;
+import spring.code.jake.myprojects.product.repository.ProductRepository;
 import spring.code.jake.myprojects.product.service.ProductService;
 import spring.code.jake.myprojects.product.util.ProductDTOMapper;
 

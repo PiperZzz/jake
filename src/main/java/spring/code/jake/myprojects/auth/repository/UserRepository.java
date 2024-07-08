@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.auth.dao;
+package spring.code.jake.myprojects.auth.repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;

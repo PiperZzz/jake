@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.auth.dao.UserRepository;
+import spring.code.jake.myprojects.auth.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
