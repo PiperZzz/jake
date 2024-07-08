@@ -15,8 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import spring.code.jake.myprojects.auth.security.CustomUserDetailsService;
 import spring.code.jake.myprojects.auth.security.JwtAuthenticationFilter;
-import spring.code.jake.myprojects.auth.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity

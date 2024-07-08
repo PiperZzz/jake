@@ -10,6 +10,7 @@ import spring.code.jake.myprojects.auth.dto.AuthenticationResponse;
 import spring.code.jake.myprojects.auth.dto.RegisterRequest;
 import spring.code.jake.myprojects.auth.model.User;
 import spring.code.jake.myprojects.auth.repository.UserRepository;
+import spring.code.jake.myprojects.auth.security.JwtService;
 
 @Service
 @RequiredArgsConstructor

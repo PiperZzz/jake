@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.auth.service;
+package spring.code.jake.myprojects.auth.security;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
