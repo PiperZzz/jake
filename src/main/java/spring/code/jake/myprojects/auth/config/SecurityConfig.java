@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.auth.filter.JwtAuthFilter;
+import spring.code.jake.myprojects.auth.security.JwtAuthenticationFilter;
 import spring.code.jake.myprojects.auth.service.CustomUserDetailsService;
 
 @Configuration
@@ -23,7 +23,7 @@ import spring.code.jake.myprojects.auth.service.CustomUserDetailsService;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, DaoAuthenticationProvider authenticationProvider) throws Exception {
@@ -32,7 +32,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**").permitAll().anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider)
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

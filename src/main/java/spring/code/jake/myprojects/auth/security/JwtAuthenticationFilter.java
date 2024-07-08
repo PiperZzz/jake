@@ -1,4 +1,4 @@
-package spring.code.jake.myprojects.auth.filter;
+package spring.code.jake.myprojects.auth.security;
 
 import lombok.RequiredArgsConstructor;
 import spring.code.jake.myprojects.auth.service.CustomUserDetailsService;
@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final CustomUserDetailsService customUserDetailsService;
