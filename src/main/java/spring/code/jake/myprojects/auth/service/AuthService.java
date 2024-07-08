@@ -40,4 +40,9 @@ public class AuthService {
             .authenticationToken(jwtToken)
             .build();
     }
+
+    public AuthenticationResponse refreshToken(AuthenticationRequest request) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
