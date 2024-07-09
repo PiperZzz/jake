@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
 
-import spring.code.jake.myprojects.product.dto.ProductDTO;
+import spring.code.jake.myprojects.product.dto.ProductDto;
 import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.model.Product;
 import spring.code.jake.myprojects.product.repository.ProductRepository;
@@ -41,7 +41,7 @@ public class MyProductServiceTests {
     @Test
     public void testUpdateProductById() {
         Long productId = 1L;
-        ProductDTO productDTO = new ProductDTO("UpdatedProduct", new ArrayList<>());
+        ProductDto productDTO = new ProductDto("UpdatedProduct", new ArrayList<>());
         Product productEntity = new Product();
         productEntity.setProductName("OldProduct");
 
@@ -49,7 +49,7 @@ public class MyProductServiceTests {
         when(myProductsRepository.save(any(Product.class))).thenReturn(productEntity);
         when(myProductDTOMapper.apply(any(Product.class))).thenReturn(productDTO);
 
-        ProductDTO updatedProductDTO = myProductService.updateProductById(productId, productDTO);
+        ProductDto updatedProductDTO = myProductService.updateProductById(productId, productDTO);
 
         assertEquals("UpdatedProduct", updatedProductDTO.productName());
         verify(myProductsRepository).save(productEntity);
@@ -59,7 +59,7 @@ public class MyProductServiceTests {
     @Test
     public void testUpdateProductById_ProductNotFound() {
         Long productId = 1L;
-        ProductDTO productDTO = new ProductDTO("UpdatedProduct", new ArrayList<>());
+        ProductDto productDTO = new ProductDto("UpdatedProduct", new ArrayList<>());
 
         when(myProductsRepository.findById(productId)).thenReturn(Optional.empty());
 
@@ -77,13 +77,13 @@ public class MyProductServiceTests {
         int page = 0;
         int size = 10;
         Product productEntity = new Product();
-        ProductDTO productDTO = new ProductDTO("TestProduct", new ArrayList<>());
+        ProductDto productDTO = new ProductDto("TestProduct", new ArrayList<>());
 
         when(myProductsRepository.findByProductNameContaining(eq(keyword), any(Pageable.class)))
                 .thenReturn(new PageImpl<>(Collections.singletonList(productEntity)));
         when(myProductDTOMapper.apply(any(Product.class))).thenReturn(productDTO);
 
-        List<ProductDTO> products = myProductService.getProductsByName(keyword, page, size);
+        List<ProductDto> products = myProductService.getProductsByName(keyword, page, size);
 
         assertEquals(1, products.size());
         assertEquals("TestProduct", products.get(0).productName());

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import lombok.RequiredArgsConstructor;
-import spring.code.jake.myprojects.product.dto.ProductDTO;
+import spring.code.jake.myprojects.product.dto.ProductDto;
 import spring.code.jake.myprojects.product.exception.ProductException;
 import spring.code.jake.myprojects.product.service.ProductService;
 
@@ -42,12 +42,12 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<ProductDTO>> getProducts(
+    public ResponseEntity<List<ProductDto>> getProducts(
             @RequestParam(value = "keyword", required = false) String keyword,
             @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         // Query Parameter 另一个常见用途是分页 Pagination
-        List<ProductDTO> products = productService.getProductsByName(keyword, pageNumber, pageSize);
+        List<ProductDto> products = productService.getProductsByName(keyword, pageNumber, pageSize);
 
         if (products == null) {
             throw new ProductException("More Specific Reason Here"); // 交给RestControllerAdvice异常处理器去处理是最佳实践

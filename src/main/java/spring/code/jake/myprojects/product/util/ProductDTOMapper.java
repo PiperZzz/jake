@@ -5,15 +5,15 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import spring.code.jake.myprojects.product.dto.ProductDTO;
+import spring.code.jake.myprojects.product.dto.ProductDto;
 import spring.code.jake.myprojects.product.model.Product;
 import spring.code.jake.myprojects.product.model.Tag;
 
 @Service
-public class ProductDTOMapper implements Function<Product, ProductDTO> {
+public class ProductDTOMapper implements Function<Product, ProductDto> {
     @Override
-    public ProductDTO apply(Product entity) {
-        return new ProductDTO(entity.getProductName(),
+    public ProductDto apply(Product entity) {
+        return new ProductDto(entity.getProductName(),
                 entity.getTags().stream().map(Tag::getTag).collect(Collectors.toList()));
     }
 }
