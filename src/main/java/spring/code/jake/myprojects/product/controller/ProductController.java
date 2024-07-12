@@ -26,33 +26,30 @@ public class ProductController {
     
     private final ProductService productService;
 
-    @GetMapping("/user")
-    public ResponseEntity<String> getUserPassword(@RequestParam("userName") String userName,
-            @RequestParam("password") String password) {
-        // Query Parameter 适合多个层级平行的参数。比如，?userName=abc&password=123
-        // 对于敏感数据，Query Parameter 也适合，因为密码不应放在URL路径中，所以Path Parameter不适用
-        return ResponseEntity.ok(userName + password + "OK");
+    @GetMapping("/{product-name}/orders/{order-id}")
+    public ResponseEntity<String> getProductOrder(@PathVariable("product-name") String productName,
+            @PathVariable("order-id") int orderId) {
+        // Path Param 适合有固定层级嵌套的参数。例如，/products/product123/orders/order234，这符合RESTful架构风格
+        // URI路径内的变量名连字符用(-)
+        return ResponseEntity.ok(productName + orderId + "OK");
     }
 
-    @GetMapping("/{userName}/order/{orderId}")
-    public ResponseEntity<String> getUserOrder(@PathVariable("userName") String userName,
-            @PathVariable("orderId") int orderId) {
-        // Path Parameter 适合有固定层级嵌套的参数。例如，/user/abc/order/123，这符合RESTful架构风格
-        return ResponseEntity.ok(userName + orderId + "OK");
-    }
-
-    @GetMapping("/products")
+    @GetMapping
     public ResponseEntity<List<ProductDto>> getProducts(
             @RequestParam(value = "keyword", required = false) String keyword,
-            @RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        // Query Parameter 另一个常见用途是分页 Pagination
+            @RequestParam(value = "page-number", defaultValue = "1") int pageNumber,
+            @RequestParam(value = "page-size", defaultValue = "10") int pageSize) {
+        // Query Param 适合多个层级相对平行的动态参数，比如过滤、排序、分页。 
+        // 分页Pagination的参数，page-number和page-size通常是要求同时存在的层级平行的参数，而keyword是可选的动态参数 /products/?keyword=something&page-number=1&page-size=10
+        // 敏感数据不能用Query Param，必须用Request Body，因为Query Param依然会暴露在URI中
+        // URI内Query Param变量名的连字符用(-)    
         List<ProductDto> products = productService.getProductsByName(keyword, pageNumber, pageSize);
 
         if (products == null) {
             throw new ProductException("More Specific Reason Here"); // 交给RestControllerAdvice异常处理器去处理是最佳实践
-        } else if (products.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"); // 实际开发中不推荐，这里只做演示
+        } else if (products.isEmpty()) { 
+            // 这里只做演示用，实际开发中空列表也是合法的200响应，不应该抛出异常，代表没有符合搜索条件的结果
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Resource Not Found"); // 实际开发中不推荐，这里只做演示，应该像上面一样
         }
 
         return ResponseEntity.ok(products);

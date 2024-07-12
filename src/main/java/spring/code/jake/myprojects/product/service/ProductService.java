@@ -47,6 +47,7 @@ public class ProductService {
     }
 
     @Cacheable("myProductLists")
+    // 技术上可以直接返回Page<ProductDto>，但是通常为了更好的封装也会用专门的自定义PageResponse<ProductDto>
     public List<ProductDto> getProductsByName(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         return productRepository.findByProductNameContaining(keyword, pageable)
