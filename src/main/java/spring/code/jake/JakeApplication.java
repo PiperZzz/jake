@@ -10,8 +10,8 @@ import spring.code.jake.mythreading.MyThread;
 
 @SpringBootApplication
 @EnableCaching
-@Profile("${spring.profiles.active}")
-@PropertySource("classpath:application.properties")
+// @Profile("${spring.profiles.active}")
+// @PropertySource("classpath:application.properties")
 public class JakeApplication {
 
 	public static void main(String[] args) {
