@@ -22,12 +22,12 @@ public class ProductCacheConfig implements CachingConfigurer {
 
     @Bean
     @Primary
-    public CacheManager concurrentCacheManager() {
+    CacheManager concurrentCacheManager() {
         return new ConcurrentMapCacheManager("myProducts");
     }
 
     @Bean
-    public CacheManager caffeineCacheManager() {
+    CacheManager caffeineCacheManager() {
         CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager("myProductLists");
         caffeineCacheManager.setCaffeine(Caffeine.newBuilder()
                 .initialCapacity(100)
