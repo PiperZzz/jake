@@ -19,12 +19,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GenerationType;
 
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Entity
 @Table(name = "users")
+@DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
