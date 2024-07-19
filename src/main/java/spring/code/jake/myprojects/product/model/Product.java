@@ -38,4 +38,14 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tag> tags;
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.setProduct(this);
+    }
+
+    public void removeTag(Tag tag) {
+        tags.remove(tag);
+        tag.setProduct(null);
+    }
 }
