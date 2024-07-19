@@ -1,5 +1,6 @@
 package spring.code.jake.myprojects.product.model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.io.Serializable;
@@ -45,6 +46,12 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
+    
+    
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags); // 是否应该返回不可变集合有争议
+        // return Set.copyOf(tags); // Java 10引入的不可变集合，如果tags是空集合，返回的是一个空集合，而不是null
+    }
 
     public void addTag(Tag tag) {
         tags.add(tag);
