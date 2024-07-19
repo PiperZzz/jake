@@ -1,11 +1,16 @@
 package spring.code.jake.myprojects.product.model;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.io.Serializable;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import java.io.Serializable;
+import lombok.AccessLevel;
+
 import org.hibernate.annotations.DynamicInsert;
 
 import jakarta.persistence.CascadeType;
@@ -31,13 +36,15 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
     @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_sequence", allocationSize = 1) // sequenceName是PostgreSQL内定义的序列名
     @Column(name = "product_id", nullable = false, updatable = false)
-    private Long id; // UUID的索引效率问题
+    @Setter(AccessLevel.NONE) // 防止id被Setter修改
+    private Long id; // UUID的索引效率问题?
 
     @Column(name = "product_name", nullable = false, unique = true)
     private String productName;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Tag> tags;
+    @Builder.Default
+    private Set<Tag> tags = new HashSet<>();
 
     public void addTag(Tag tag) {
         tags.add(tag);
