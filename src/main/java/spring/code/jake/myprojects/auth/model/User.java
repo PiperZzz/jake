@@ -1,50 +1,80 @@
 package spring.code.jake.myprojects.auth.model;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Builder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.AccessLevel;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.Collection;
+import java.time.Instant;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GenerationType;
-
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
 @Entity
 @Table(name = "users")
 @DynamicInsert
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode(of = "id")
+@AllArgsConstructor // Builder需要
+@NoArgsConstructor // JPA需要
+@Builder // 如何防止id被Builder修改？
 public class User implements UserDetails {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "user_id", nullable = false, updatable = false)
-    private Long id;
+    @Setter(AccessLevel.NONE) // 防止id被Setter修改
+    private UUID id;
     
+    @Size(max = 255)
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Size(max = 255)
+    @NotBlank
     @Column(nullable = false)
+    @ToString.Exclude
     private String password;
 
+    @Size(max = 255)
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt; // 比Date的优势是不可变
+
+    @Column(name = "updated_at")
+    private Instant updatedAt;
     
     @Builder.Default
     private boolean enabled = true;
@@ -56,7 +86,6 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
-
     
     @Builder.Default
     private boolean credentialsNonExpired = true;
@@ -66,6 +95,16 @@ public class User implements UserDetails {
 
     @Builder.Default
     private boolean accountNonLocked = true;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = Instant.now();
+    }
 
     @Override
     public String getUsername() {
