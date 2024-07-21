@@ -8,7 +8,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import spring.code.jake.myprojects.product.exception.ProductException;
 
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestControllerAdvice
 public class ProductExceptionHandler {
