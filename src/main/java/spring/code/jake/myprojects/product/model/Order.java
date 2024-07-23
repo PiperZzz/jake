@@ -29,9 +29,9 @@ public class Order {
     @Id
     private UUID id;
 
-    @ToString.Exclude // 防止循环引用
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false) // 双向关联 (Bidirectional Association) 
+    @ToString.Exclude // 防止循环引用
     private Customer customer;
 
     public void setCustomer(Customer customer) {

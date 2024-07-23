@@ -34,13 +34,12 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true) // 双向关联 (Bidirectional Association)
     // 如果是内向关联@JoinColumn在这里，否则在“Many”实体（Order）内维护
-    private Set<Order> orders = new HashSet<>(); // 尽管@Builder会初始化，这里还是保险起见
+    @ToString.Exclude // 防止循环引用
+    private final Set<Order> orders = new HashSet<>(); // 尽管@Builder会初始化，这里还是保险起见
 
     public void addOrder(Order order) {
         if (order == null) 
             throw new NullPointerException("Customer is null");
-        if (orders == null) 
-            orders = new HashSet<>();
         if (order.getCustomer() != null) 
             throw new IllegalStateException("The order is already assigned to a customer.");
         if (orders.contains(order)) 
