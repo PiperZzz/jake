@@ -14,8 +14,8 @@ public class MyFunctional {
         return getGenericType(myClass, MyClass::getString);
     }
 
-    public Integer getMyInteger(MyClass myClass) {
-        return getGenericType(myClass, (mC) -> mC.getInteger());
+    public Integer getMyInteger(MyClass myClass, Integer integer) {
+        return getGenericType(myClass, (mC) -> mC.getInteger(integer));
     }
 
     class MyClass {
@@ -26,8 +26,8 @@ public class MyFunctional {
             return string;
         }
 
-        public Integer getInteger() {
-            return integer;
+        public Integer getInteger(Integer integer) {
+            return this.integer + integer;
         }
     }
 }
