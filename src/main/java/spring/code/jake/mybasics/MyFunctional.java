@@ -15,7 +15,7 @@ public class MyFunctional {
     }
 
     public Integer getMyInteger(MyClass myClass, Integer integer) {
-        return getGenericType(myClass, (mC) -> mC.getInteger(integer));
+        return getGenericType(myClass, myClass2 -> myClass2.getInteger(integer));
     }
 
     class MyClass {
