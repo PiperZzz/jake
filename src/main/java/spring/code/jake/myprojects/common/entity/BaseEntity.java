@@ -20,7 +20,7 @@ import jakarta.persistence.MappedSuperclass;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Identifiable<UUID>, Auditable {
     @Id
-    @GeneratedValue(generator = "UUID")
+    @GeneratedValue(generator = "UUID") // 分布式系统避免使用自增长ID，可能会导致冲突，但是UUID不是有序序列，会导致索引效率问题，最终解决方案还是Snowflake ID
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
