@@ -27,7 +27,7 @@ import jakarta.persistence.Table;
 
 @Data
 @Entity
-@DynamicInsert // 为避免null被JPA替换成占位符导致Table Default Value失效
+@DynamicInsert // 为避免null被JPA替换成占位符导致Table Default Value失效，但是Best Practice还是在应用层解决Default Value这个问题
 @Table(name = "products")
 @NoArgsConstructor
 @AllArgsConstructor
