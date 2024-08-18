@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
+@Entity(name = "Customer")
 @Table(name = "customers")
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+@ToString // 为了避免循环引用，建议手动实现toString方法
 @EqualsAndHashCode(of = "id")
 @AllArgsConstructor
 @Builder
