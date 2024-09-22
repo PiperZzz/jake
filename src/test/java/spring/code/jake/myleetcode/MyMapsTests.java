@@ -1,6 +1,7 @@
 package spring.code.jake.myleetcode;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 
@@ -17,5 +18,14 @@ public class MyMapsTests {
         Arrays.sort(actual);
         Arrays.sort(expected);
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void testTopKFrequentElements() {
+        var nums = new int[] {1, 1, 1, 2, 2, 3};
+        var k = 2;
+        var expected = Arrays.asList(1, 2);
+        var actual = MyMaps.topKFrequencyElements(nums, k);
+        assertEquals(expected, actual);
     }
 }

@@ -56,26 +56,26 @@ public class MyMaps {
      * Your algorithm's time complexity must be better than O(n log n), where n is
      * the array's size.
      */
-    public static List<Integer> findTopKFrequency(int[] nums, int k) {
+    public static List<Integer> topKFrequencyElements(int[] nums, int k) {
 
-        List<Integer> result = new ArrayList<>();
+        var result = new ArrayList<Integer>();
 
-        Map<Integer, Integer> mapNumFrequency = new HashMap<>();
+        var mapNumFreq = new HashMap<Integer, Integer>();
 
-        for (int i : nums) {
-            mapNumFrequency.put(i, mapNumFrequency.getOrDefault(i, 0) + 1);
+        for (var i : nums) {
+            mapNumFreq.put(i, mapNumFreq.getOrDefault(i, 0) + 1);
         }
 
-        // numbers with the same frequency in one list, frequency as key
-        TreeMap<Integer, List<Integer>> mapFrequencyNums = new TreeMap<>();
+        // put any number with the same frequency in one list, frequency as key
+        var mapFreqNums = new TreeMap<Integer, List<Integer>>();
 
-        mapNumFrequency.forEach((num, frequency) -> {
-            mapFrequencyNums.computeIfAbsent(frequency, key -> new ArrayList<>()).add(num);
+        mapNumFreq.forEach((num, freq) -> {
+            mapFreqNums.computeIfAbsent(freq, key -> new ArrayList<>()).add(num);
         });
 
         // keep adding numbers until there are k or greater numbers in the list
         while (result.size() < k) {
-            result.addAll(mapFrequencyNums.pollLastEntry().getValue());
+            result.addAll(mapFreqNums.pollLastEntry().getValue());
         }
 
         return result;
