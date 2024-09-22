@@ -4,6 +4,20 @@ import java.util.*;
 
 public class MyMaps {
 
+    /* 1. Two Sum
+     * Given an array of integers, return indices of the two numbers such that they
+     * add up to a specific target.
+     * 
+     * You may assume that each input would have exactly one solution, and you may
+     * not use the same element twice.
+     * 
+     * Example:
+     * 
+     * Given nums = [2, 7, 11, 15], target = 9,
+     * 
+     * Because nums[0] + nums[1] = 2 + 7 = 9,
+     * return [0, 1].
+     */
     public static int[] twoSum(int[] nums, int target) {
 
         int[] result = new int[2];
@@ -25,6 +39,23 @@ public class MyMaps {
         return result;
     }
 
+    /* 347. Top K Frequent Elements
+     * Given a non-empty array of integers, return the k most frequent elements.
+     * 
+     * Example 1:
+     * 
+     * Input: nums = [1,1,1,2,2,3], k = 2
+     * Output: [1,2]
+     * Example 2:
+     * 
+     * Input: nums = [1], k = 1
+     * Output: [1]
+     * Note:
+     * 
+     * You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
+     * Your algorithm's time complexity must be better than O(n log n), where n is
+     * the array's size.
+     */
     public static List<Integer> findTopKFrequency(int[] nums, int k) {
 
         List<Integer> result = new ArrayList<>();
