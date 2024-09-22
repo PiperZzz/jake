@@ -17,7 +17,7 @@ public class MyMapsTests {
         var actual = MyMaps.twoSum(nums, target);
         Arrays.sort(actual);
         Arrays.sort(expected);
-        assertArrayEquals(expected, actual);
+        assertArrayEquals(expected, actual); // array 必须用 assertArrayEquals 比较
     }
 
     @Test
@@ -26,6 +26,6 @@ public class MyMapsTests {
         var k = 2;
         var expected = Arrays.asList(1, 2);
         var actual = MyMaps.topKFrequencyElements(nums, k);
-        assertEquals(expected, actual);
+        assertEquals(expected, actual); // List 可以用 assertEquals 比较
     }
 }
