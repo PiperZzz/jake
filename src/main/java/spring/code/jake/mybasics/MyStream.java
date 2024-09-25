@@ -16,7 +16,8 @@ public class MyStream {
         /* filter()方法参数是Predicate<T>, Lambda实现其内部test(T t)方法 返回boolean */
         /* map()方法参数是Function<T, R>, Lambda实现其内部apply(T t)方法 返回泛型R */
         /* filter()和()map都属于Intermediate Operations(中间操作)会继续返回Stream<T>类型对象 */
-        /* forEach(),reduce(),collect()都属于Terminal Operations(终端操作)会触发之前的全部中间操作并结束Stream，返回非Stream对象 */
+        /* forEach(),reduce(),collect()都属于Terminal Operations(终端操作) */
+        /* Terminal Operations会触发之前Chain Of Intermediate Operations并结束Stream，返回非Stream对象 */
 
         if(length.isPresent()) {
             System.out.println(length.get());
