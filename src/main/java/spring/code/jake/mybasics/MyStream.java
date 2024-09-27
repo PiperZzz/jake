@@ -43,4 +43,17 @@ public class MyStream {
         });
         myList2.forEach(System.out::println);
     }
+
+    public static void toChars(String input) {
+        /* chars() -> IntStream对象 -> mapToObj() -> Stream<Character>对象 */
+        /* String需要两步才能传化成字符Stream对象 */
+        /* IntStream对象是字符的Unicode流 */
+        String token = "abc123";
+		String output = input.chars()
+				.mapToObj(ch -> (char) ch)
+				.map(ch -> token.indexOf(ch) != -1 ? "--" + ch + "--" : String.valueOf(ch))
+				.collect(Collectors.joining());
+        
+        System.out.println(input + output);
+    }
 }
