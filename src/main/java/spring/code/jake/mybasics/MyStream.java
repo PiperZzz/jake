@@ -51,9 +51,9 @@ public class MyStream {
         String token = "abc123";
 		String output = input.chars()
 				.mapToObj(ch -> (char) ch)
-				.map(ch -> token.indexOf(ch) != -1 ? "--" + ch + "--" : String.valueOf(ch))
+				.map(ch -> token.indexOf(ch) == -1 ? String.valueOf(ch) : "--" + ch + "--")
 				.collect(Collectors.joining());
         
-        System.out.println(input + output);
+        System.out.println(token + " " + input + " " + output);
     }
 }
