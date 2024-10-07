@@ -13,7 +13,7 @@ public class MyStream {
                 Arrays.asList("Jake", "John", "Jill", "Jenny", "Jesse", "Jen"));
 
         /* Optional 也是Java 8新特性，用于优雅的处理null返回值 */
-        Optional<Integer> length = myList.stream().filter(s -> s.length() > 3).map(String::length).reduce((a, b) -> a + b);
+        Optional<Integer> length = myList.stream().filter(s -> s.length() > 3).map(String::length).reduce((var a, var b) -> a + b);
         /* filter()方法参数是Predicate<T>, Lambda实现其内部test(T t)方法 返回boolean */
         /* map()方法参数是Function<T, R>, Lambda实现其内部apply(T t)方法 返回泛型R */
         /* filter()和()map都属于Intermediate Operations(中间操作)会继续返回Stream<T>类型对象 */
