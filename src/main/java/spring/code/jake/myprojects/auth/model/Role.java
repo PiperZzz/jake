@@ -23,7 +23,7 @@ import jakarta.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Role implements GrantedAuthority {
+public class Role implements GrantedAuthority { // consider enum for roles
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
